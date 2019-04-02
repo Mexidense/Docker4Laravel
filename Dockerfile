@@ -27,16 +27,17 @@ RUN a2dissite 000-default.conf && a2ensite app.conf && a2enmod rewrite && servic
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 RUN composer install
 
-# Final Touch
+# Cleaning Temp files
 RUN . ~/.bashrc
-RUN apt clean && \
-        rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN php artisan cache:clear
-RUN php artisan config:clear
-
-RUN chown -R www-data:www-data \
-        /app/storage \
-        /app/bootstrap/cache
+# File permissions for Laravel storage and bootstrap
+RUN chgrp -R www-data \
+            /app/storage \
+            /app/bootstrap/cache
+RUN chmod -R ug+rwx \
+            /app/storage \
+            /app/bootstrap/cache
 
 WORKDIR /app
