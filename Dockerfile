@@ -14,6 +14,9 @@ RUN apt-get update && \
     zip \
     unzip
 
+# Requirements Laravel5.8: Install PHP modules, the rest is installed by default
+RUN docker-php-ext-install pdo_mysql bcmath
+
 # Enable Apache2 conf
 COPY docker/php/app.ini /usr/local/etc/php/conf.d
 COPY docker/apache/app.conf /etc/apache2/sites-available/app.conf
@@ -21,6 +24,7 @@ RUN a2dissite 000-default.conf && a2ensite app.conf && a2enmod rewrite && servic
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+RUN export COMPOSER_ALLOW_SUPERUSER=1
 RUN composer install
 
 # Final Touch
