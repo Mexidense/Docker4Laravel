@@ -25,7 +25,6 @@ RUN a2dissite 000-default.conf && a2ensite app.conf && a2enmod rewrite && servic
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
-RUN export COMPOSER_ALLOW_SUPERUSER=1
 RUN composer install
 
 # Final Touch
