@@ -41,4 +41,7 @@ RUN chmod -R 755 \
     /app/storage \
     /app/bootstrap/cache
 
+# App key generation
+RUN php artisan key:generate
+
 WORKDIR /app
