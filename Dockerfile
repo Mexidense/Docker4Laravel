@@ -4,6 +4,7 @@ RUN mkdir -p /app
 WORKDIR /app
 
 # Copy project
+RUN usermod -u 1000 www-data && groupmod -g 1000 www-data
 COPY --chown=www-data:www-data . /app
 
 # Install Debian packages
@@ -33,11 +34,11 @@ RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # File permissions for Laravel storage and bootstrap
-RUN chgrp -R www-data \
-            /app/storage \
-            /app/bootstrap/cache
-RUN chmod -R ug+rwx \
-            /app/storage \
-            /app/bootstrap/cache
+RUN chown -R www-data:www-data \
+    /app/storage \
+    /app/bootstrap/cache
+RUN chmod -R 755 \
+    /app/storage \
+    /app/bootstrap/cache
 
 WORKDIR /app
