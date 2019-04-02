@@ -9,6 +9,7 @@ COPY --chown=www-data:www-data . /app
 # Install Debian packages
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+    apt-utils \
     git \
     openssh-client \
     zip \
