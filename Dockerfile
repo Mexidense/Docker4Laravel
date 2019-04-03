@@ -13,11 +13,15 @@ RUN apt-get update && \
     apt-utils \
     git \
     openssh-client \
+    libicu-dev \
     zip \
     unzip
 
 # Requirements Laravel5.8: Install PHP modules, the rest is installed by default
-RUN docker-php-ext-install pdo_mysql bcmath
+RUN docker-php-ext-install \
+    pdo_mysql \
+    bcmath \
+    intl
 
 # Enable Apache2 conf
 COPY docker/php/app.ini /usr/local/etc/php/conf.d
