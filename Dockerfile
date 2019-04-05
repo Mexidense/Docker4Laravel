@@ -29,7 +29,7 @@ COPY docker/apache/app.conf /etc/apache2/sites-available/app.conf
 RUN a2dissite 000-default.conf && a2ensite app.conf && a2enmod rewrite && service apache2 restart
 
 # Install Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install
 
 # Cleaning Temp files
